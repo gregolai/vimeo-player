@@ -1,0 +1,54 @@
+// Need an opacity mixin because IE doesn't like the opacity key.
+//
+@mixin opacity($value){
+	$ie_value: $value * 100;
+	opacity: $value;
+	filter: alpha(opacity=$ie_value);
+}
+
+// A handy float clearfix mixin, if we ever need one.
+// 
+@mixin clearfix() {
+	&:before, &:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+// A cool pinstripe pattern.
+// 
+@mixin pinstripe($color) {
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAI0lEQVQIW2NkwAT/GdHE/gP5jMiCYAGQIpggXAAmiCIAEgQAAE4FBbECyZcAAAAASUVORK5CYII=) $color;
+}
+
+// Centers an element horizontally and vertically. Caution should be used with this,
+// since centering can occur between pixel boundaries, making text appear blurry.
+// 
+@mixin center_xy(){
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate3d(-50%, -50%, 0);
+}
+
+// Simple vertical gradient between two colors and a fallback color for browsers without gradient support.
+//
+@mixin vertical_gradient($top_color, $bottom_color, $fallback_color){
+
+	$ie_top_color: ie-hex-str($top_color);
+	$ie_bottom_color: ie-hex-str($bottom_color);
+
+	background: $fallback_color;
+
+	background: -moz-linear-gradient(top, $top_color 0%, $bottom_color 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, $top_color), color-stop(100%, $bottom_color));
+	background: -webkit-linear-gradient(top, $top_color 0%, $bottom_color 100%);
+	background: -o-linear-gradient(top, $top_color 0%, $bottom_color 100%);
+	background: -ms-linear-gradient(top, $top_color 0%, $bottom_color 100%);
+	background: linear-gradient(to bottom, $top_color 0%, $bottom_color 100%);
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$ie_top_color', endColorstr='$ie_bottom_color', GradientType=0 );
+}

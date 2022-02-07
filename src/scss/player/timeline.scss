@@ -1,0 +1,65 @@
+#pl-timeline {
+	// This is the click area
+	$timeline_height: 18px;
+	$inner_height_expand: round($timeline_height * 0.4);
+	$inner_height_compact: round($timeline_height * 0.3);
+
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	bottom: 100%; // anchor to the top of controls
+	height: $timeline_height;
+	cursor: pointer;
+
+	&:hover {
+
+		> .timeline-inner {
+			height: $inner_height_expand;
+			border-radius: round($inner_height_expand / 2);
+			background: rgba_white(0.2);
+		}
+	}
+
+	// This is the display area. Contains progress and buffer bars
+	> .timeline-inner {
+
+		// This pushes the timeline up a little so the hover area
+		// expands slightly below the timeline
+		$margin_bottom: ceil($inner_height_compact * 1.2);
+
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: $inner_height_compact;
+		background: rgba_white(0.136);
+		border: 1px solid rgba_black(0.1);
+		border-radius: round($inner_height_compact / 2);
+		margin-bottom: $margin_bottom;
+
+		transition: height 0.4s, background 0.4s;
+	}
+}
+
+#pl-progress-bar,
+#pl-buffer-bar,
+#pl-hover-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	border-radius: inherit;
+}
+#pl-progress-bar {
+	z-index: 3;
+	background: $rgba_dodgerblue;
+}
+#pl-buffer-bar {
+	z-index: 1;
+	background: rgba_white(0.5);
+	border-right: 1px solid rgba_black(0.2);
+}
+#pl-hover-bar {
+	z-index: 2;
+	background: rgba_white(0.7);
+}

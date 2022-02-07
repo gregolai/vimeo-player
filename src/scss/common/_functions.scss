@@ -1,0 +1,33 @@
+
+// Return a white rgba color code with chosen opacity.
+// 
+@function rgba_white($opacity){
+	@return rgba(255, 255, 255, $opacity);
+}
+
+// Return a black rgba color code with chosen opacity.
+// 
+@function rgba_black($opacity){
+	@return rgba(0, 0, 0, $opacity);
+}
+
+// Rounds a number to the closest even number. This is useful to use
+// on containers when using the position-absolute + transform technique
+// to center child elements.
+// 
+@function round_to_even($num){
+
+	$round: round($num);
+	@if $round % 2 == 0 {
+		@return $round;
+	}
+	@else {
+		$floor: floor($num);
+		@if $floor % 2 == 0 {
+			@return $floor;
+		}
+		@else {
+			@return ceil($round);
+		}
+	}
+}

@@ -1,0 +1,83 @@
+%player_center_display {
+	@include center_xy();
+	padding: 8px;
+	text-align: center;
+	background: rgba_black(0.5);
+	border: 1px solid rgba_black(0.8);
+}
+
+// The root element of the player
+#pl-frame {
+	position: relative;
+	height: 560px;
+	background: rgba_black(0.9);
+	overflow: hidden;
+	user-select: none;
+	font-size: 14px;
+}
+#pl-frame.playing {
+	#pl-btn-play { display: none; }
+	#pl-btn-pause { display: inline-block; }
+}
+#pl-frame.paused {
+	#pl-btn-play { display: inline-block; }
+	#pl-btn-pause { display: none; }
+}
+#pl-frame.fullscreen {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+}
+
+#pl-video {
+	position: absolute;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+}
+
+#pl-loading {
+	@extend %player_center_display;
+	display: none;
+
+	> .bar {
+		$height: 24px;
+		$width: 8px;
+		$margin: 2px;
+
+		display: inline-block;
+		width: $width;
+		height: 0;
+		margin: $height $margin 0 $margin;
+		background: #fff;
+		animation: loading-bar 400ms infinite alternate;
+
+		@keyframes loading-bar {
+			from { margin-top: $height; height: 0; }
+			to { margin-top: 0; height: $height; }
+		}
+		&.b { animation-delay: 100ms; }
+		&.c { animation-delay: 200ms; }
+		&.d { animation-delay: 300ms; }
+		&.e { animation-delay: 400ms; }
+	}
+
+	> .text {
+		color: #fff;
+	}
+}
+#pl-frame.loading #pl-loading { display: block; }
+
+#pl-error {
+	@extend %player_center_display;
+	display: none;
+	color: #ff0;
+	font-weight: 600;
+	font-size: 1.3em;
+}
+#pl-frame.error #pl-error { display: block; }

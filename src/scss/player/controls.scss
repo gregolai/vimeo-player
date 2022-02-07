@@ -1,0 +1,130 @@
+$player_controls_height: 44px;
+
+%basic_player_button {
+
+	$btn_margin: 8px;
+	$btn_size: round_to_even($player_controls_height - $btn_margin);
+	$btn_radius: ceil($btn_size * 0.1);
+
+	position: relative;
+	display: inline-block;
+	width: $btn_size;
+	height: $btn_size;
+	margin: 0 16px;
+	background: rgba_white(0.3);
+	border: 1px solid transparent;
+	border-radius: $btn_radius;
+	cursor: pointer;
+
+	&:hover {
+		background: #fff;
+		border: 1px solid $rgba_dodgerblue;
+		> svg {
+			fill: $rgba_dodgerblue;
+		}
+	}
+
+	> svg {
+		$svg_size: round($btn_size * 0.4);
+
+		@include center_xy();
+		width: $svg_size;
+		height: $svg_size;
+		fill: #fff;
+		pointer-events: none;
+	}
+}
+
+#pl-controls {
+
+	$controls_padding_bottom: 8px;
+
+	@extend %flex_container;
+	align-items: stretch;
+	justify-content: space-between;
+
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: $player_controls_height; 
+	padding-bottom: $controls_padding_bottom;
+
+	transition: visibility 0.4s, opacity 0.4s;
+
+	> .background {
+		$background_height: $player_controls_height + $controls_padding_bottom;
+
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: $background_height;
+		@include vertical_gradient(rgba_black(0), rgba_black(0.6), rgba_black(0.4));
+	}
+
+	> .left-controls,
+	> .middle-controls,
+	> .right-controls {
+		@extend %flex_child_grow;
+		@extend %flex_container;
+		min-width: 33.333333%; // try to stay centered
+	}
+
+	> .left-controls {
+		justify-content: flex-start;
+	}
+	> .middle-controls {
+		justify-content: center;
+	}
+	> .right-controls {
+		justify-content: flex-end;
+	}
+}
+#pl-frame.hide-controls #pl-controls {
+	@include opacity(0);
+	visibility: hidden;
+}
+
+#pl-time-display {
+	white-space: nowrap;
+	color: #fff;
+	margin-left: 32px;
+	line-height: $player_controls_height;
+}
+
+// Play / Pause buttons
+#pl-btn-play {
+	@extend %basic_player_button;
+	display: block;
+}
+#pl-btn-pause {
+	@extend %basic_player_button;
+	display: none;
+}
+#pl-frame.playing {
+	#pl-btn-play { display: none; }
+	#pl-btn-pause { display: block; }
+}
+
+// Fullscreen enter / exit buttons
+#pl-btn-fullscreen-enter {
+	@extend %basic_player_button;
+	display: block;
+}
+#pl-btn-fullscreen-exit {
+	@extend %basic_player_button;
+	display: none;
+}
+#pl-frame.fullscreen {
+	#pl-btn-fullscreen-enter { display: none; }
+	#pl-btn-fullscreen-exit { display: block; }
+}
+
+// Previous / Next video buttons
+#pl-btn-prev-video {
+	@extend %basic_player_button;
+}
+#pl-btn-next-video {
+	@extend %basic_player_button;
+}
